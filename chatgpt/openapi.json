@@ -1,0 +1,111 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "phyxexp 受约束实验数据处理",
+    "version": "0.1.0",
+    "description": "受约束的实验数据处理：只暴露白名单工具，大模型通过 Actions 只能调用这些端点，不能自行算数。数值一律带 run_id 与输入哈希溯源。"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "本地开发；真实接入请改为 ngrok/公网 HTTPS 地址"
+    }
+  ],
+  "paths": {
+    "/list": {
+      "get": {
+        "operationId": "listExperiments",
+        "summary": "列出可配置的实验及其输入字段",
+        "responses": {
+          "200": {
+            "description": "实验清单（id/name/tool/inputs/checks）"
+          }
+        }
+      }
+    },
+    "/run": {
+      "post": {
+        "operationId": "runExperiment",
+        "summary": "执行受约束实验计算，返回带溯源的结论",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "结构化结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "约束被违反（GuardError），禁止绕过"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RunRequest": {
+        "type": "object",
+        "required": [
+          "experiment",
+          "data"
+        ],
+        "properties": {
+          "experiment": {
+            "type": "string",
+            "description": "实验 id：ohms_law / spring_constant / youngs_modulus / linear_fit"
+          },
+          "data": {
+            "type": "object",
+            "description": "输入数据，字段见 /list 返回的各实验 inputs"
+          }
+        }
+      },
+      "RunResponse": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "description": "本次运行唯一 id（溯源）"
+          },
+          "input_hash": {
+            "type": "string",
+            "description": "输入数据哈希（可复现）"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "物理一致性检查结果"
+          },
+          "conclusion": {
+            "type": "string",
+            "description": "最终结论（原样转述，不得改写数字）"
+          },
+          "grounded": {
+            "type": "boolean",
+            "description": "结论是否通过 grounding 校验"
+          },
+          "replay_match": {
+            "type": "boolean",
+            "description": "重放结果是否一致（可复现）"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,465 @@
+{
+  "defaults": {
+    "uncertainty_standard": "JJF 1059.1-2012",
+    "expansion_k": 2
+  },
+  "experiments": [
+    {
+      "id": "ohms_law",
+      "name": "伏安法测电阻",
+      "tool": "ohms_law_resistance",
+      "inputs": {
+        "I": {
+          "label": "电流",
+          "unit": "A",
+          "kind": "data"
+        },
+        "V": {
+          "label": "电压",
+          "unit": "V",
+          "kind": "data"
+        }
+      },
+      "checks": [
+        "R > 0",
+        "intercept_ok"
+      ],
+      "conclusion": "电阻 R = {R_fmt} Ω（k=2），r = {r:.5f}，R² = {r2:.5f}，截距近零检查：{intercept_ok_cn}"
+    },
+    {
+      "id": "wheatstone_bridge",
+      "name": "惠斯通电桥测电阻",
+      "tool": "wheatstone_bridge",
+      "inputs": {
+        "R0": {
+          "label": "标准电阻",
+          "unit": "Ω",
+          "kind": "constant"
+        },
+        "l1": {
+          "label": "桥臂 l1",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "l2": {
+          "label": "桥臂 l2",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_R0": {
+          "label": "R0 不确定度",
+          "unit": "Ω",
+          "kind": "constant"
+        },
+        "u_l1": {
+          "label": "l1 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_l2": {
+          "label": "l2 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "Rx > 0"
+      ],
+      "conclusion": "待测电阻 Rx = {Rx_fmt} Ω（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "hall_carrier_density",
+      "name": "霍尔效应载流子浓度",
+      "tool": "hall_carrier_density",
+      "inputs": {
+        "I": {
+          "label": "工作电流",
+          "unit": "A",
+          "kind": "constant"
+        },
+        "B": {
+          "label": "磁感应强度",
+          "unit": "T",
+          "kind": "constant"
+        },
+        "d": {
+          "label": "样品厚度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "UH": {
+          "label": "霍尔电压",
+          "unit": "V",
+          "kind": "constant"
+        },
+        "u_I": {
+          "label": "I 不确定度",
+          "unit": "A",
+          "kind": "constant"
+        },
+        "u_B": {
+          "label": "B 不确定度",
+          "unit": "T",
+          "kind": "constant"
+        },
+        "u_d": {
+          "label": "d 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_UH": {
+          "label": "UH 不确定度",
+          "unit": "V",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "n > 0"
+      ],
+      "conclusion": "载流子浓度 n = {n_fmt} /m³（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "spring_constant",
+      "name": "弹簧振子求劲度系数",
+      "tool": "spring_constant",
+      "inputs": {
+        "m": {
+          "label": "质量",
+          "unit": "kg",
+          "kind": "data"
+        },
+        "T": {
+          "label": "周期",
+          "unit": "s",
+          "kind": "data"
+        }
+      },
+      "checks": [
+        "k > 0",
+        "intercept_ok"
+      ],
+      "conclusion": "劲度系数 k = {k_fmt} N/m（k=2），斜率 A = {slope_A:.4f}，r = {r:.5f}，截距近零检查：{intercept_ok_cn}"
+    },
+    {
+      "id": "simple_pendulum",
+      "name": "单摆测重力加速度",
+      "tool": "simple_pendulum",
+      "inputs": {
+        "L": {
+          "label": "摆长",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "T": {
+          "label": "周期",
+          "unit": "s",
+          "kind": "constant"
+        },
+        "u_L": {
+          "label": "L 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_T": {
+          "label": "T 不确定度",
+          "unit": "s",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "g > 0"
+      ],
+      "conclusion": "重力加速度 g = {g_fmt} m/s²（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "falling_ball_viscosity",
+      "name": "落球法测黏滞系数",
+      "tool": "falling_ball_viscosity",
+      "inputs": {
+        "rho_ball": {
+          "label": "钢球密度",
+          "unit": "kg/m³",
+          "kind": "constant"
+        },
+        "rho_liquid": {
+          "label": "液体密度",
+          "unit": "kg/m³",
+          "kind": "constant"
+        },
+        "d": {
+          "label": "球直径",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "L": {
+          "label": "下落距离",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "t": {
+          "label": "下落时间",
+          "unit": "s",
+          "kind": "constant"
+        },
+        "u_rho_ball": {
+          "label": "ρ 不确定度",
+          "unit": "kg/m³",
+          "kind": "constant"
+        },
+        "u_rho_liquid": {
+          "label": "ρ0 不确定度",
+          "unit": "kg/m³",
+          "kind": "constant"
+        },
+        "u_d": {
+          "label": "d 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_L": {
+          "label": "L 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_t": {
+          "label": "t 不确定度",
+          "unit": "s",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "eta > 0"
+      ],
+      "conclusion": "黏滞系数 η = {eta_fmt} Pa·s（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "newton_rings",
+      "name": "牛顿环测曲率半径",
+      "tool": "newton_rings",
+      "inputs": {
+        "Dm": {
+          "label": "第m环直径",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "Dn": {
+          "label": "第n环直径",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "m": {
+          "label": "级次 m",
+          "unit": "",
+          "kind": "constant"
+        },
+        "n": {
+          "label": "级次 n",
+          "unit": "",
+          "kind": "constant"
+        },
+        "wavelength": {
+          "label": "波长 λ",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_Dm": {
+          "label": "Dm 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_Dn": {
+          "label": "Dn 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_wavelength": {
+          "label": "λ 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "R > 0"
+      ],
+      "conclusion": "曲率半径 R = {R_fmt} m（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "grating_wavelength",
+      "name": "光栅衍射测波长",
+      "tool": "grating_wavelength",
+      "inputs": {
+        "d": {
+          "label": "光栅常数",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "theta": {
+          "label": "衍射角",
+          "unit": "rad",
+          "kind": "constant"
+        },
+        "k": {
+          "label": "级次 k",
+          "unit": "",
+          "kind": "constant"
+        },
+        "u_d": {
+          "label": "d 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_theta": {
+          "label": "θ 不确定度",
+          "unit": "rad",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "wavelength > 0"
+      ],
+      "conclusion": "波长 λ = {wavelength_fmt} m（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "linear_expansion",
+      "name": "金属线膨胀系数",
+      "tool": "linear_expansion",
+      "inputs": {
+        "L0": {
+          "label": "原长",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "delta_L": {
+          "label": "伸长量 ΔL",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "delta_t": {
+          "label": "温差 Δt",
+          "unit": "℃",
+          "kind": "constant"
+        },
+        "u_L0": {
+          "label": "L0 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_delta_L": {
+          "label": "ΔL 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_delta_t": {
+          "label": "Δt 不确定度",
+          "unit": "℃",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "alpha > 0"
+      ],
+      "conclusion": "线膨胀系数 α = {alpha_fmt} /℃（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "youngs_modulus",
+      "name": "杨氏模量（光杠杆法）",
+      "tool": "youngs_modulus",
+      "inputs": {
+        "m": {
+          "label": "砝码质量",
+          "unit": "kg",
+          "kind": "constant"
+        },
+        "g": {
+          "label": "重力加速度",
+          "unit": "m/s²",
+          "kind": "constant"
+        },
+        "L0": {
+          "label": "钢丝原长",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "D": {
+          "label": "望远镜到标尺",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "b": {
+          "label": "光杠杆前后脚",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "d": {
+          "label": "钢丝直径",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "dn": {
+          "label": "标尺读数差",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_m": {
+          "label": "m 不确定度",
+          "unit": "kg",
+          "kind": "constant"
+        },
+        "u_g": {
+          "label": "g 不确定度",
+          "unit": "m/s²",
+          "kind": "constant"
+        },
+        "u_L0": {
+          "label": "L0 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_D": {
+          "label": "D 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_b": {
+          "label": "b 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_d": {
+          "label": "d 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_dn": {
+          "label": "dn 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        }
+      },
+      "checks": [
+        "E > 0"
+      ],
+      "conclusion": "杨氏模量 E = {E_fmt} Pa（k=2），误差主要来自{dominant}"
+    },
+    {
+      "id": "linear_fit",
+      "name": "通用线性拟合",
+      "tool": "linear_fit",
+      "inputs": {
+        "x": {
+          "label": "x",
+          "kind": "data"
+        },
+        "y": {
+          "label": "y",
+          "kind": "data"
+        }
+      },
+      "checks": [
+        "r2 >= 0",
+        "n >= 3"
+      ],
+      "conclusion": "斜率 k = {k:.4f} ± {u_k:.4f}，截距 b = {b:.4f} ± {u_b:.4f}，r = {r:.5f}，R² = {r2:.5f}，n = {n}"
+    }
+  ]
+}
