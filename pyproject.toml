@@ -13,3 +13,6 @@ dependencies = ["numpy>=1.24", "matplotlib>=3.7"]
 
 [tool.setuptools.packages.find]
 include = ["phyxexp*"]
+
+[tool.setuptools.package-data]
+phyxexp = ["data/*.json"]

@@ -42,7 +42,8 @@ class Handler(BaseHTTPRequestHandler):
                 "standard": CONFIG["defaults"]["uncertainty_standard"],
                 "experiments": [
                     {"id": e["id"], "name": e["name"], "tool": e["tool"],
-                     "inputs": e["inputs"], "checks": e.get("checks", [])}
+                     "inputs": e["inputs"], "checks": e.get("checks", []),
+                     "keywords": e.get("keywords", [])}
                     for e in CONFIG["experiments"]
                 ],
             })

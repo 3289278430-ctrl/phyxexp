@@ -1,31 +1,40 @@
 ---
 name: phyxexp
-description: 受约束的学生实验数据处理技能。当用户提供物理实验数据并要求计算（线性拟合、伏安法测电阻、弹簧振子求劲度系数、杨氏模量、不确定度、残差分析）时使用。禁止自行计算或编造数据，必须调用 scripts/run.py 的审查过工具链。
+description: 受约束的学生实验数据处理技能。当用户提供物理实验数据并要求计算、拟合、求不确定度时使用。禁止自行计算或编造数据，必须调用 scripts/run.py 的审查过工具链。本技能会自动识别用户数据对应的实验，并配合对话上下文推断单位与列含义。
 ---
 
 # phyxexp —— 受约束的实验数据处理 Skill
 
-大模型只允许「选实验 + 传数据」，数值一律来自受约束工具链，结论带溯源。
+大模型只允许「识别实验 + 传数据」，数值一律来自受约束工具链，结论带溯源。
 
 ## 硬约束（违反即停止）
 1. **禁止**心算、写代码算数、编造/估算任何数值。
 2. 所有数值只能来自 `scripts/run.py` 的输出（带 run_id 与输入哈希）。
-3. 最终答案必须原样引用 run.py 输出的 `conclusion` 字段，不得改写其中的数字。
+3. 最终答案必须原样引用 run.py 的 `conclusion`，不得改写数字。
+
+## 第 0 步：识别实验（配合上下文，别急着问用户）
+1. **先用对话上下文**：用户说过的话、上传的文件名、历史记录，往往已透露实验类型。
+   - 例：用户说「这是杨氏模量的数据」→ 实验就是 `youngs_modulus`。
+2. 不确定时用 `python scripts/run.py --list` 看实验目录（每个输入的标签+单位都写清）。
+3. 再用 `--identify` 按「数据形状 + 提示词」辅助确认：
+   ```bash
+   python scripts/run.py --identify --data '{"c1":[...],"c2":[...]}' --hint '杨氏模量'
+   ```
+4. **单位与列含义优先从目录推断**，不要反复问用户单位；只有真正歧义时才问一次。
 
 ## 使用步骤
-1. 列出可用实验：
+1. 识别实验（见第 0 步）。
+2. 把用户数据映射到该实验的输入（数据列按顺序对应数据型输入；单位按目录）。
+3. 调用：
    ```bash
-   python scripts/run.py --list
+   python scripts/run.py --auto --data '<json>' --hint '<实验提示>'
+   # 或指定实验：
+   python scripts/run.py -e <id> --data '<json>'
    ```
-2. 把用户数据整理成 JSON（字段名见 --list 中各实验的 inputs）。
-3. 调用（实验 id 按需替换）：
-   ```bash
-   python scripts/run.py --experiment ohms_law --data '{"I":[0.1,0.2,0.3,0.4,0.5,0.6],"V":[1.0,1.97,2.95,3.94,4.93,5.92]}'
-   ```
-4. 只转述输出的 `conclusion`，并附 `run_id` 与 `input_hash`。
+4. 原样转述 `conclusion`，附 `run_id` / `input_hash`。
 
 ## 可配置
-新增实验只需在 `config/experiments.json` 里加一条（id / tool / inputs / checks / conclusion 模板），**无需改代码**。白名单工具见 `phyxexp/agent/registry.py`。
+新增实验只需在 `config/experiments.json` 加一条（id / tool / inputs / checks / conclusion / keywords），无需改代码。
 
 ## 可用实验（11 个，力/电/光/热）
 | id | 名称 | 工具 |
@@ -41,3 +50,4 @@ description: 受约束的学生实验数据处理技能。当用户提供物理�
 | grating_wavelength | 光栅衍射测波长 | grating_wavelength |
 | linear_expansion | 金属线膨胀系数 | linear_expansion |
 | linear_fit | 通用线性拟合 | linear_fit |
+| youngs_modulus_raw | 杨氏模量原始数据全流程（多步管线） | youngs_modulus |

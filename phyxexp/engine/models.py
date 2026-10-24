@@ -8,7 +8,7 @@ import math
 import numpy as np
 
 from .fit import linear_fit
-from .uncertainty import propagate
+from .uncertainty import propagate, type_a, type_b, combine
 
 E_CHARGE = 1.602176634e-19  # 元电荷 C
 G_STD = 9.794               # 本地重力加速度 m/s²（演示默认）
@@ -137,3 +137,12 @@ def youngs_modulus(m, g, L0, D, b, d, dn, u_m, u_g, u_L0, u_D, u_b, u_d, u_dn):
     return {"E": E, "u_E": u_E, "share": share,
             "share_labels": {"m": "砝码质量 m", "g": "重力加速度 g", "L0": "钢丝原长 L0",
                              "D": "望远镜到标尺 D", "b": "光杠杆前后脚 b", "d": "钢丝直径 d", "dn": "标尺读数差 dn"}}
+
+
+def diameter_uncertainty(values_mm, instrument_error_mm=0.004):
+    """直径多次读数：A 类（随机）+ B 类（千分尺仪器误差）合成。"""
+    vals = [v / 1000.0 for v in values_mm]
+    dm, s, uA = type_a(vals)
+    uB = type_b(instrument_error_mm / 1000.0)
+    ud = combine(uA, uB)
+    return {"d_mean": dm, "s": s, "u_A": uA, "u_B": uB, "u_d": ud}

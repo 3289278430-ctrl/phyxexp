@@ -24,7 +24,17 @@
         "R > 0",
         "intercept_ok"
       ],
-      "conclusion": "电阻 R = {R_fmt} Ω（k=2），r = {r:.5f}，R² = {r2:.5f}，截距近零检查：{intercept_ok_cn}"
+      "conclusion": "电阻 R = {R_fmt} Ω（k=2），r = {r:.5f}，R² = {r2:.5f}，截距近零检查：{intercept_ok_cn}",
+      "keywords": [
+        "伏安",
+        "伏安法",
+        "电阻",
+        "欧姆",
+        "R",
+        "I-V",
+        "V-I",
+        "电压电流"
+      ]
     },
     {
       "id": "wheatstone_bridge",
@@ -65,7 +75,14 @@
       "checks": [
         "Rx > 0"
       ],
-      "conclusion": "待测电阻 Rx = {Rx_fmt} Ω（k=2），误差主要来自{dominant}"
+      "conclusion": "待测电阻 Rx = {Rx_fmt} Ω（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "惠斯通",
+        "惠斯登",
+        "电桥",
+        "桥臂",
+        "电阻"
+      ]
     },
     {
       "id": "hall_carrier_density",
@@ -116,7 +133,14 @@
       "checks": [
         "n > 0"
       ],
-      "conclusion": "载流子浓度 n = {n_fmt} /m³（k=2），误差主要来自{dominant}"
+      "conclusion": "载流子浓度 n = {n_fmt} /m³（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "霍尔",
+        "载流子",
+        "霍尔效应",
+        "浓度",
+        "磁感应"
+      ]
     },
     {
       "id": "spring_constant",
@@ -138,7 +162,14 @@
         "k > 0",
         "intercept_ok"
       ],
-      "conclusion": "劲度系数 k = {k_fmt} N/m（k=2），斜率 A = {slope_A:.4f}，r = {r:.5f}，截距近零检查：{intercept_ok_cn}"
+      "conclusion": "劲度系数 k = {k_fmt} N/m（k=2），斜率 A = {slope_A:.4f}，r = {r:.5f}，截距近零检查：{intercept_ok_cn}",
+      "keywords": [
+        "弹簧",
+        "振子",
+        "劲度",
+        "周期",
+        "k"
+      ]
     },
     {
       "id": "simple_pendulum",
@@ -169,7 +200,14 @@
       "checks": [
         "g > 0"
       ],
-      "conclusion": "重力加速度 g = {g_fmt} m/s²（k=2），误差主要来自{dominant}"
+      "conclusion": "重力加速度 g = {g_fmt} m/s²（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "单摆",
+        "重力加速度",
+        "g",
+        "摆长",
+        "周期"
+      ]
     },
     {
       "id": "falling_ball_viscosity",
@@ -230,7 +268,17 @@
       "checks": [
         "eta > 0"
       ],
-      "conclusion": "黏滞系数 η = {eta_fmt} Pa·s（k=2），误差主要来自{dominant}"
+      "conclusion": "黏滞系数 η = {eta_fmt} Pa·s（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "落球",
+        "黏滞",
+        "粘滞",
+        "黏度",
+        "粘度",
+        "斯托克斯",
+        "液体",
+        "钢球"
+      ]
     },
     {
       "id": "newton_rings",
@@ -281,7 +329,14 @@
       "checks": [
         "R > 0"
       ],
-      "conclusion": "曲率半径 R = {R_fmt} m（k=2），误差主要来自{dominant}"
+      "conclusion": "曲率半径 R = {R_fmt} m（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "牛顿环",
+        "曲率半径",
+        "干涉",
+        "环",
+        "凸透镜"
+      ]
     },
     {
       "id": "grating_wavelength",
@@ -317,7 +372,15 @@
       "checks": [
         "wavelength > 0"
       ],
-      "conclusion": "波长 λ = {wavelength_fmt} m（k=2），误差主要来自{dominant}"
+      "conclusion": "波长 λ = {wavelength_fmt} m（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "光栅",
+        "衍射",
+        "波长",
+        "λ",
+        "lambda",
+        "光谱"
+      ]
     },
     {
       "id": "linear_expansion",
@@ -358,7 +421,14 @@
       "checks": [
         "alpha > 0"
       ],
-      "conclusion": "线膨胀系数 α = {alpha_fmt} /℃（k=2），误差主要来自{dominant}"
+      "conclusion": "线膨胀系数 α = {alpha_fmt} /℃（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "线膨胀",
+        "膨胀系数",
+        "热膨胀",
+        "α",
+        "金属"
+      ]
     },
     {
       "id": "youngs_modulus",
@@ -439,7 +509,17 @@
       "checks": [
         "E > 0"
       ],
-      "conclusion": "杨氏模量 E = {E_fmt} Pa（k=2），误差主要来自{dominant}"
+      "conclusion": "杨氏模量 E = {E_fmt} Pa（k=2），误差主要来自{dominant}",
+      "keywords": [
+        "杨氏模量",
+        "杨氏",
+        "光杠杆",
+        "弹性模量",
+        "金属丝",
+        "钢丝",
+        "E",
+        "拉伸"
+      ]
     },
     {
       "id": "linear_fit",
@@ -459,7 +539,154 @@
         "r2 >= 0",
         "n >= 3"
       ],
-      "conclusion": "斜率 k = {k:.4f} ± {u_k:.4f}，截距 b = {b:.4f} ± {u_b:.4f}，r = {r:.5f}，R² = {r2:.5f}，n = {n}"
+      "conclusion": "斜率 k = {k:.4f} ± {u_k:.4f}，截距 b = {b:.4f} ± {u_b:.4f}，r = {r:.5f}，R² = {r2:.5f}，n = {n}",
+      "keywords": [
+        "拟合",
+        "线性",
+        "直线",
+        "回归",
+        "散点"
+      ]
+    },
+    {
+      "id": "youngs_modulus_raw",
+      "name": "杨氏模量（原始数据全流程）",
+      "tool": "youngs_modulus",
+      "inputs": {
+        "m": {
+          "label": "拉力质量",
+          "unit": "kg",
+          "kind": "data"
+        },
+        "n": {
+          "label": "标尺读数",
+          "unit": "cm",
+          "kind": "data"
+        },
+        "d_readings": {
+          "label": "直径多次读数",
+          "unit": "mm",
+          "kind": "data"
+        },
+        "m_load": {
+          "label": "砝码质量",
+          "unit": "kg",
+          "kind": "constant"
+        },
+        "g": {
+          "label": "重力加速度",
+          "unit": "m/s²",
+          "kind": "constant"
+        },
+        "L0": {
+          "label": "钢丝原长",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "D": {
+          "label": "望远镜到标尺",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "b": {
+          "label": "光杠杆前后脚",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_m": {
+          "label": "m 不确定度",
+          "unit": "kg",
+          "kind": "constant"
+        },
+        "u_g": {
+          "label": "g 不确定度",
+          "unit": "m/s²",
+          "kind": "constant"
+        },
+        "u_L0": {
+          "label": "L0 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_D": {
+          "label": "D 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        },
+        "u_b": {
+          "label": "b 不确定度",
+          "unit": "m",
+          "kind": "constant"
+        }
+      },
+      "keywords": [
+        "杨氏模量",
+        "杨氏",
+        "光杠杆",
+        "原始数据",
+        "全流程",
+        "E"
+      ],
+      "pipeline": [
+        {
+          "tool": "linear_fit",
+          "params": {
+            "x": "data.m",
+            "y": "data.n"
+          },
+          "as": "fit"
+        },
+        {
+          "tool": "diameter_uncertainty",
+          "params": {
+            "values_mm": "data.d_readings",
+            "instrument_error_mm": 0.004
+          },
+          "as": "diam"
+        },
+        {
+          "derive": {
+            "as": "dn",
+            "op": "mul",
+            "a": "fit.k",
+            "b": "data.m_load",
+            "scale": 0.01
+          }
+        },
+        {
+          "derive": {
+            "as": "u_dn",
+            "op": "mul",
+            "a": "fit.u_k",
+            "b": "data.m_load",
+            "scale": 0.01
+          }
+        },
+        {
+          "tool": "youngs_modulus",
+          "params": {
+            "m": "data.m_load",
+            "g": "data.g",
+            "L0": "data.L0",
+            "D": "data.D",
+            "b": "data.b",
+            "d": "diam.d_mean",
+            "dn": "dn",
+            "u_m": "data.u_m",
+            "u_g": "data.u_g",
+            "u_L0": "data.u_L0",
+            "u_D": "data.u_D",
+            "u_b": "data.u_b",
+            "u_d": "diam.u_d",
+            "u_dn": "u_dn"
+          },
+          "as": "ym"
+        }
+      ],
+      "checks": [
+        "E > 0"
+      ],
+      "conclusion": "杨氏模量 E = {E_fmt} Pa（k=2），误差主要来自{dominant}"
     }
   ]
 }

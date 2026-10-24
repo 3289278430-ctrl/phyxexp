@@ -46,6 +46,9 @@ register(Tool("hall_carrier_density", "霍尔效应载流子浓度：n=I·B/(e·
               _m.hall_carrier_density, ["n > 0"], "霍尔效应"))
 
 # 力学
+register(Tool("diameter_uncertainty", "直径多次读数：A类+仪器B类合成不确定度。",
+              {"values_mm": "list[float]", "instrument_error_mm": "float"},
+              _m.diameter_uncertainty, ["d_mean > 0"], "JJF 1059.1-2012"))
 register(Tool("spring_constant", "弹簧振子：T²=(4π²/k)·m，斜率 A=4π²/k。",
               {"m": "list[float]", "T": "list[float]"}, _m.spring_constant, ["k > 0", "intercept_ok"], "T=2π√(m/k)"))
 register(Tool("simple_pendulum", "单摆测重力加速度：g=4π²L/T²。",

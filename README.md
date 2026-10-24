@@ -30,16 +30,60 @@ python demo/compare.py                              # 裸 LLM vs 受约束 Agent
 
 ## 目录
 ```
-SKILL.md                  # 宿主大模型（Claude Code 等）加载的 Skill 声明
-config/experiments.json   # 可配置的实验声明
-scripts/run.py            # Skill 运行时入口（大模型唯一计算入口）
-phyxexp/                  # 引擎 + 约束层（白名单/守卫/溯源）
+SKILL.md                  # 宿主大模型加载的 Skill 声明
+config/experiments.json   # 可配置的实验声明（权威）
+phyxexp/
   engine/                 # 不确定度、拟合、物理模型
-  agent/                  # 注册表、守卫、执行器、编排
-  viz.py                  # 绘图工具
-demo/                     # 对比演示
-docs/                     # 录屏演示脚本等
+  agent/                  # 白名单、守卫、执行器、编排（含多步管线）
+  ingest.py               # 统一数据识别（文字/文档/图片）
+  identify.py             # 实验自动识别
+  viz.py / format.py      # 绘图 / 规范结果表示
+  data/experiments.json   # 打包副本
+scripts/run.py            # Skill 运行时入口
+scripts/server.py         # HTTP 入口（ChatGPT Actions）
+chatgpt/                  # Custom GPT 的 Actions 与指令
+demo/                     # 裸LLM vs 受约束Agent 对比
+tests/                    # 引擎单测
+examples/                 # 可直接跑的示例
+docs/                     # 录屏/优势论证/技术选型/部署/PPT
+.github/workflows/ci.yml  # CI
 ```
+
+
+
+## 多步管线（完整实验）
+
+除单步实验外，支持把多个工具按序串成一条管线，一条命令完成整个实验：
+
+- `youngs_modulus_raw`（杨氏模量原始数据全流程）：线性拟合 → 直径 A 类 → 派生 dn → 公式传播 → 误差预算。
+- 管线声明在 `config/experiments.json` 的 `pipeline` 字段（工具 + 派生量 + 引用），无需写代码。
+
+## 打包
+
+`pip install .` 后，配置从包内 `phyxexp/data/experiments.json` 读取；源码运行时优先用根目录 `config/experiments.json`。可用环境变量 `PHYXEXP_CONFIG` 覆盖。
+
+## 数据识别（可选安装）
+
+phyxexp 核心计算只需 numpy + matplotlib（`requirements.txt`）。
+
+从文档/图片里"识别数据"是可选能力，分两档：**轻量内置、重选装**。
+
+### 默认轻量（覆盖 Excel/CSV/Word/PDF/文字/图片基础 OCR）
+```bash
+pip install -r requirements-ingest.txt
+```
+
+### 选装 · 高精度（体积大，有需求再自行安装）
+针对扫描件表格、手写数字、公式，可选装更重的引擎（phyxexp 会自动检测并优先使用）：
+```bash
+# PaddleOCR + PP-Structure（表格结构 + 手写 + 公式，中文最强）
+pip install paddleocr paddlepaddle
+
+# Surya 2（多语言表格识别）
+pip install surya-ocr
+```
+
+> 说明：重型引擎体积大、依赖多，不做硬性绑定；`phyxexp/ingest.py` 用「后端检测」自动选引擎：没装就走轻量 RapidOCR，装了 PaddleOCR 就自动用它的 PP-Structure。
 
 ## 不确定度依据
 JJF 1059.1-2012（测量不确定度评定与表示）。
@@ -56,3 +100,5 @@ JJF 1059.1-2012（测量不确定度评定与表示）。
 
 ## License
 MIT
+
+第三方依赖与许可见 [THIRD_PARTY.md](THIRD_PARTY.md)。
